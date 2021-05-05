@@ -3,11 +3,57 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from "react-redux";
+import { ChangeValueTypes, IChangeValue, ILogged, LoggedTypes, store } from "./redux-components";
+// import { Action } from 'redux';
+
+// STORE -> GLOBALIZED STATE
+
+// ACTION INCREMENT
+const increment: () => IChangeValue = () => {
+  return {
+    type: ChangeValueTypes.Increment,
+    value: 1
+  }
+};
+
+const decrement: () => IChangeValue = () => {
+  return {
+    type: ChangeValueTypes.Decrement,
+    value: 2
+  }
+};
+
+const signin: () => ILogged = () => {
+  return {
+    type: LoggedTypes.SIGN_IN,
+  }
+}
+
+const signout: () => ILogged = () => {
+  return {
+    type: LoggedTypes.SIGN_OUT,
+  }
+}
+
+
+// REDUCER
+
+store.subscribe(() => console.log(store.getState()));
+
+// DISPATCH
+store.dispatch(decrement());
+store.dispatch(increment());
+store.dispatch(decrement());
+store.dispatch(signin());
+store.dispatch(signout());
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider> ,
   document.getElementById('root')
 );
 

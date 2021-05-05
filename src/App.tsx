@@ -2,23 +2,30 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import { Test } from "./mod-test"
+import { RoundButton } from "./mod-round_button"
+import { ChangeValueTypes, dispatch, useValueSelector } from "./redux-components";
+
 function App() {
+  const value = useValueSelector();
+  const incrementValue = () => dispatch(
+    {
+      type: ChangeValueTypes.Increment,
+      value: 1
+    }
+  );
+
+  const decrementValue = () => dispatch(
+    {
+      type: ChangeValueTypes.Decrement,
+      value: 1
+    }
+  );
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ display: "flex" }}>
+      <Test value={value} />
+      <RoundButton text={"+"} onPress={incrementValue}/>
+      <RoundButton text={"-"} onPress={decrementValue}/>
     </div>
   );
 }
