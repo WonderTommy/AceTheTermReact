@@ -1,4 +1,4 @@
-export type IActionType = IChangeValue | ILogged | ISetLanguage;
+export type IActionType = IChangeValue | ILogged | ISetLanguage | ISetPage | IModifySubjects;
 
 export interface IChangeValue {
     type: ChangeValueTypes;
@@ -35,3 +35,39 @@ export enum ILanguage {
     JP = "Japanese",
 }
 
+export interface ISetPage {
+    type: SetPageTypes,
+    value: IPage,
+}
+
+export enum SetPageTypes {
+    SET_PAGE = "SET_PAGE",
+}
+
+export enum IPage {
+    CALCULATION = "CALCULATION",
+    TERM = "TERM",
+    HISTORY = "HISTORY",
+}
+
+export interface IModifySubjects {
+    type: ModifySubjectsTypes,
+    value: ISubject,
+}
+
+export enum ModifySubjectsTypes {
+    ADD_SUBJECT = "ADD_SUBJECT",
+    REMOVE_SUBJECT = "REMOVE_SUBJECT",
+}
+
+export interface ISubject {
+    title: string,
+    items: ISubjectItem[],
+}
+
+export interface ISubjectItem {
+    title: string,
+    point: number,
+    fullPoint: number,
+    weight: number,
+}

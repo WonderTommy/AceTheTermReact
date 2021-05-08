@@ -7,56 +7,84 @@ import { Test } from "../mod-test"
 import { RoundButton } from "../mod-round_button"
 import { ILanguage, SetLanguageTypes, ChangeValueTypes, dispatch, useValueSelector } from "../redux-components";
 import { useTranslator } from "../constants"
-import { Button } from "@material-ui/core"
+import { Button, Menu, MenuItem } from "@material-ui/core"
+import { LanguageMenu } from "../mod-language_menu";
+import { PageCalculation } from "../page-calculation";
 
 export const PageTest: FunctionComponent = () => {
-  const value = useValueSelector();
-  const translator = useTranslator();
-  const incrementValue = () => dispatch(
-    {
-      type: ChangeValueTypes.Increment,
-      value: 1
-    }
-  );
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const decrementValue = () => dispatch(
-    {
-      type: ChangeValueTypes.Decrement,
-      value: 1
-    }
-  );
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
 
-  const setEN = () => dispatch(
-    {
-      type: SetLanguageTypes.SET_LANGUAGE,
-      value: ILanguage.EN,
-    }
-  );
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const value = useValueSelector();
+    const translator = useTranslator();
+    const incrementValue = () => dispatch(
+        {
+        type: ChangeValueTypes.Increment,
+        value: 1
+        }
+    );
 
-  const setCN = () => dispatch(
-    {
-      type: SetLanguageTypes.SET_LANGUAGE,
-      value: ILanguage.CN_SI,
-    }
-  );
+    const decrementValue = () => dispatch(
+        {
+        type: ChangeValueTypes.Decrement,
+        value: 1
+        }
+    );
 
-  const setJP = () => dispatch(
-    {
-      type: SetLanguageTypes.SET_LANGUAGE,
-      value: ILanguage.JP,
-    }
-  );
+    const setEN = () => dispatch(
+        {
+        type: SetLanguageTypes.SET_LANGUAGE,
+        value: ILanguage.EN,
+        }
+    );
 
-  return (
-    <div style={{ display: "flex" }}>
-      <Test value={value} />
-      <RoundButton text={"+"} onPress={incrementValue}/>
-      <RoundButton text={"-"} onPress={decrementValue}/>
-      <RoundButton text={translator.BUTTON.CALCULATION} onPress={decrementValue}/>
-      <RoundButton text={"Set EN"} onPress={setEN}/>
-      <RoundButton text={"Set CN_SI"} onPress={setCN}/>
-      <RoundButton text={"Set JP"} onPress={setJP}/>
-      <Button children={"A"} color={"default"} style={{background: "#FF0000"}}/>
-    </div>
+    const setCN = () => dispatch(
+        {
+        type: SetLanguageTypes.SET_LANGUAGE,
+        value: ILanguage.CN_SI,
+        }
+    );
+
+    const setJP = () => dispatch(
+        {
+        type: SetLanguageTypes.SET_LANGUAGE,
+        value: ILanguage.JP,
+        }
+    );
+
+    return (
+        <div style={{ display: "flex" }}>
+            <Test value={value} />
+            <RoundButton text={"+"} onPress={incrementValue}/>
+            <RoundButton text={"-"} onPress={decrementValue}/>
+            <RoundButton text={translator.BUTTON.CALCULATION} onPress={decrementValue}/>
+            <RoundButton text={"Set EN"} onPress={setEN}/>
+            <RoundButton text={"Set CN_SI"} onPress={setCN}/>
+            <RoundButton text={"Set JP"} onPress={setJP}/>
+            <Button children={"Test Button"} color={"default"} style={{background: "#774ABC", color: "#FFFFFF"}}/>
+            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                Open Menu
+            </Button>
+            <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+            >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
+            </Menu>
+            <LanguageMenu/>
+            {/* <ItemSubject title={"CS 135"} /> */}
+            <PageCalculation/>
+        </div>
   );
 }
