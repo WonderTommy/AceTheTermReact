@@ -7,32 +7,44 @@ const initialState: ISubject[] = [
         items: [
             {
                 title: "Assignment 1",
-                point: 20.0,
-                fullPoint: 25.0,
+                points: 20.0,
+                fullPoints: 25.0,
+                weight: 10.0,
+            },
+            {
+                title: "Assignment 2",
+                points: 18.0,
+                fullPoints: 20.0,
                 weight: 10.0,
             },
         ],
     },
     {
-        title: "CS 135",
+        title: "CS 136",
         items: [
             {
                 title: "Assignment 1",
-                point: 20.0,
-                fullPoint: 25.0,
+                points: 20.0,
+                fullPoints: 25.0,
                 weight: 10.0,
             },
         ],
     },
+    {
+        title: "CS 240",
+        items: [],
+    }
 ];
 
 export const modifySubjectsReducer: Reducer<ISubject[], IModifySubjects> = (oldState = initialState, action) => {
     let { value, type } = action;
+    var newState = oldState;
     switch (type) {
       case ModifySubjectsTypes.ADD_SUBJECT:
-        return { ...oldState, value };
+        newState.push(value)
+        return newState;
       case ModifySubjectsTypes.REMOVE_SUBJECT:
-        const newState = oldState.filter(subject => subject.title !== value.title);
+        newState = oldState.filter(subject => subject.title !== value.title);
         return newState;
       default:
         return oldState;

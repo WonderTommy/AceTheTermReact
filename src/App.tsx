@@ -8,7 +8,9 @@ import { PageMain } from "./page-main";
 
 function App() {
   return (
-    <PageMain/>
+    <div style={{ height: "100vh", minHeight: "100vh" }}>
+      <PageMain/>
+    </div>
     // <PageTest/>
   );
 }

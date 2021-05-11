@@ -1,14 +1,25 @@
 import { ILanguage } from "../redux-components";
 
 interface ITranslation {
-    BUTTON : {
+    BUTTON: {
         CALCULATION: string,
         TERM: string,
         HISTORY: string,
         LANGUAGE: string,
     },
+    DIALOG: {
+        TITLE_ADD_SUBJECT: string,
+        TEXT_FIELD_LABEL_SUBJECT: string,
+        TEXT_FIELD_DEFAULT_SUBJECT: string,
+        BUTTON_SAVE: string,
+        BUTTON_CANCEL: string,
+    },
     LANGUAGE_LABEL: string,
     LANGUAGE_LIST_LABELS: { [key in ILanguage]: string },
+    CALCULATION_ITEM_LABEL_FULL_POINTS: string,
+    CALCULATION_ITEM_LABEL_POINTS: string,
+    CALCULATION_ITEM_LABEL_WEIGHT: string,
+    MESSAGE_NO_TASK_TO_SHOW: string,
 };
 
 export const CONST_TEXT: { [key in ILanguage]: ITranslation } = {
@@ -19,6 +30,13 @@ export const CONST_TEXT: { [key in ILanguage]: ITranslation } = {
             HISTORY: "History",
             LANGUAGE: "Language",
         },
+        DIALOG: {
+            TITLE_ADD_SUBJECT: "New Subject",
+            TEXT_FIELD_LABEL_SUBJECT: "Subject",
+            TEXT_FIELD_DEFAULT_SUBJECT: "Not Named",
+            BUTTON_SAVE: "Save",
+            BUTTON_CANCEL: "Cancel",
+        },
         LANGUAGE_LABEL: "English",
         LANGUAGE_LIST_LABELS: {
             [ILanguage.EN]: "English",
@@ -26,6 +44,10 @@ export const CONST_TEXT: { [key in ILanguage]: ITranslation } = {
             [ILanguage.CN_TR]: "Chinese (Traditional)",
             [ILanguage.JP]: "Japanese",
         },
+        CALCULATION_ITEM_LABEL_FULL_POINTS: "Full Points: ",
+        CALCULATION_ITEM_LABEL_POINTS: "Points: ",
+        CALCULATION_ITEM_LABEL_WEIGHT: "Weight: ",
+        MESSAGE_NO_TASK_TO_SHOW: "NO ITEM TO DISPLAY",
     },
     [ILanguage.CN_SI]: {
         BUTTON: {
@@ -34,6 +56,13 @@ export const CONST_TEXT: { [key in ILanguage]: ITranslation } = {
             HISTORY: "历史",
             LANGUAGE: "语言",
         },
+        DIALOG: {
+            TITLE_ADD_SUBJECT: "添加科目",
+            TEXT_FIELD_LABEL_SUBJECT: "科目",
+            TEXT_FIELD_DEFAULT_SUBJECT: "未命名",
+            BUTTON_SAVE: "保存",
+            BUTTON_CANCEL: "取消",
+        },
         LANGUAGE_LABEL: "简体中文",
         LANGUAGE_LIST_LABELS: {
             [ILanguage.EN]: "英语",
@@ -41,6 +70,10 @@ export const CONST_TEXT: { [key in ILanguage]: ITranslation } = {
             [ILanguage.CN_TR]: "繁体中文",
             [ILanguage.JP]: "日语",
         },
+        CALCULATION_ITEM_LABEL_FULL_POINTS: "满分：",
+        CALCULATION_ITEM_LABEL_POINTS: "得分：",
+        CALCULATION_ITEM_LABEL_WEIGHT: "权重：",
+        MESSAGE_NO_TASK_TO_SHOW: "没有可以展示的项目",
     },
     [ILanguage.CN_TR]: {
         BUTTON: {
@@ -49,6 +82,13 @@ export const CONST_TEXT: { [key in ILanguage]: ITranslation } = {
             HISTORY: "歷史",
             LANGUAGE: "語言",
         },
+        DIALOG: {
+            TITLE_ADD_SUBJECT: "添加科目",
+            TEXT_FIELD_LABEL_SUBJECT: "科目",
+            TEXT_FIELD_DEFAULT_SUBJECT: "未命名",
+            BUTTON_SAVE: "保存",
+            BUTTON_CANCEL: "取消",
+        },
         LANGUAGE_LABEL: "繁體中文",
         LANGUAGE_LIST_LABELS: {
             [ILanguage.EN]: "英語",
@@ -56,6 +96,10 @@ export const CONST_TEXT: { [key in ILanguage]: ITranslation } = {
             [ILanguage.CN_TR]: "繁體中文",
             [ILanguage.JP]: "日語",
         },
+        CALCULATION_ITEM_LABEL_FULL_POINTS: "滿分：",
+        CALCULATION_ITEM_LABEL_POINTS: "得分：",
+        CALCULATION_ITEM_LABEL_WEIGHT: "權重：",
+        MESSAGE_NO_TASK_TO_SHOW: "沒有可以展示的項目",
     },
     [ILanguage.JP]: {
         BUTTON: {
@@ -64,6 +108,13 @@ export const CONST_TEXT: { [key in ILanguage]: ITranslation } = {
             HISTORY: "歴史",
             LANGUAGE: "言語",
         },
+        DIALOG: {
+            TITLE_ADD_SUBJECT: "新規科目",
+            TEXT_FIELD_LABEL_SUBJECT: "科目",
+            TEXT_FIELD_DEFAULT_SUBJECT: "名前なし",
+            BUTTON_SAVE: "保存",
+            BUTTON_CANCEL: "キャンセル",
+        },
         LANGUAGE_LABEL: "日本語",
         LANGUAGE_LIST_LABELS: {
             [ILanguage.EN]: "英語",
@@ -71,5 +122,9 @@ export const CONST_TEXT: { [key in ILanguage]: ITranslation } = {
             [ILanguage.CN_TR]: "中国語（繁体字）",
             [ILanguage.JP]: "日本語",
         },
+        CALCULATION_ITEM_LABEL_FULL_POINTS: "満点：",
+        CALCULATION_ITEM_LABEL_POINTS: "点数：",
+        CALCULATION_ITEM_LABEL_WEIGHT: "パーセンテージ: ",
+        MESSAGE_NO_TASK_TO_SHOW: "展示する項目がありません",
     },
 }

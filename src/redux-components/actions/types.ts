@@ -67,7 +67,7 @@ export interface ISubject {
 
 export interface ISubjectItem {
     title: string,
-    point: number,
-    fullPoint: number,
+    points: number,
+    fullPoints: number,
     weight: number,
 }
