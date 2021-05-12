@@ -52,12 +52,19 @@ export enum IPage {
 
 export interface IModifySubjects {
     type: ModifySubjectsTypes,
-    value: ISubject,
+    value: {
+        subject?: ISubject,
+        item?: {
+            index: number,
+            item: ISubjectItem,
+        },
+    },
 }
 
 export enum ModifySubjectsTypes {
     ADD_SUBJECT = "ADD_SUBJECT",
     REMOVE_SUBJECT = "REMOVE_SUBJECT",
+    ADD_ITEM = "ADD_ITEM",
 }
 
 export interface ISubject {
@@ -71,3 +78,4 @@ export interface ISubjectItem {
     fullPoints: number,
     weight: number,
 }
+

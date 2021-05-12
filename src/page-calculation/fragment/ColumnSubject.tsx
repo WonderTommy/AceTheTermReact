@@ -28,7 +28,9 @@ export const ColumnSubject: FunctionComponent<IColumnSubject> = ({ setSelectedIn
         dispatch(
             {
                 type: ModifySubjectsTypes.ADD_SUBJECT,
-                value: { title: dialogInputNewSubject === "" ? translator.DIALOG.TEXT_FIELD_DEFAULT_SUBJECT : dialogInputNewSubject, items: [] },
+                value: {
+                    subject: { title: dialogInputNewSubject === "" ? translator.DIALOG.TEXT_FIELD_DEFAULT_SUBJECT : dialogInputNewSubject, items: [] },
+                },
             }
         );
         setDialogInputNewSubject("");
@@ -40,7 +42,7 @@ export const ColumnSubject: FunctionComponent<IColumnSubject> = ({ setSelectedIn
 
     const itemSubjects = subjectTitles.map((value) => <ItemSubject { ...value } key={value.index} setSelectedIndex={setSelectedIndex}/>);
     return (
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", flexDirection: "column", paddingRight: 12 }}>
             <AddButton onClick={handleClickOpen}/>
             {itemSubjects}
             <Dialog open={openDialog} onClose={handleClose} aria-labelledby="form-dialog-title">

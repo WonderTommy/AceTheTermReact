@@ -31,7 +31,7 @@ export const ItemTask: FunctionComponent<IItemTask> = ({ index, title, points, f
                     {title}
                 </styled.RowItemTitle>
                 <styled.RowItemTitle>
-                    {`${points/fullPoints*100}%`}
+                    {`${fullPoints === 0 ? 0 : String(points/fullPoints*100).length > 5 ? String(points/fullPoints*100).substring(0, 6) : String(points/fullPoints*100) }%`}
                 </styled.RowItemTitle>
             </styled.RowItemTask>
             <styled.RowItemTask>
@@ -39,7 +39,7 @@ export const ItemTask: FunctionComponent<IItemTask> = ({ index, title, points, f
                     {`${translator.CALCULATION_ITEM_LABEL_POINTS}${points}`}
                 </div>
                 <div>
-                    {points/fullPoints*weight}
+                    {fullPoints === 0 ? 0 : String(points/fullPoints*weight).length > 5 ? String(points/fullPoints*weight).substring(0, 6) : String(points/fullPoints*weight)}
                 </div>
             </styled.RowItemTask>
             <styled.RowItemTask>

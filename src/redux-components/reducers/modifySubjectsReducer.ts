@@ -38,13 +38,16 @@ const initialState: ISubject[] = [
 
 export const modifySubjectsReducer: Reducer<ISubject[], IModifySubjects> = (oldState = initialState, action) => {
     let { value, type } = action;
-    var newState = oldState;
+    var newState = [ ...oldState ];
     switch (type) {
       case ModifySubjectsTypes.ADD_SUBJECT:
-        newState.push(value)
+        newState.push(value.subject!)
         return newState;
       case ModifySubjectsTypes.REMOVE_SUBJECT:
-        newState = oldState.filter(subject => subject.title !== value.title);
+        newState = oldState.filter(subject => subject.title !== value.subject!.title);
+        return newState;
+      case ModifySubjectsTypes.ADD_ITEM:
+        newState[value.item!.index].items.push(value.item!.item);
         return newState;
       default:
         return oldState;

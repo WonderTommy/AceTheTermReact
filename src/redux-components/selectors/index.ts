@@ -11,6 +11,6 @@ export const usePageSelector = () => useSelector((state: IStateType) => state.pa
 
 export const useSubjectsSelector = () => useSelector((state: IStateType) => state.subjects);
 
-export const useSubjectSelector = (index: number) => useSelector((state: IStateType) => index < 0 ? null : state.subjects[index]);
+export const useSubjectSelector = (index: number) => useSubjectsSelector()[index]; //useSelector((state: IStateType) => index < 0 ? null : state.subjects[index]);
 
 export const useSubjectTitlesSelector = () => useSelector((state: IStateType) => state.subjects.map((value, index) => ({ title: value.title, index: index })));
