@@ -11,7 +11,7 @@ export interface IColumnSubject {
 export const ColumnSubject: FunctionComponent<IColumnSubject> = ({ setSelectedIndex }) => {
     const [openDialog, setOpenDialog] = useState<boolean>(false);
     const [dialogInputNewSubject, setDialogInputNewSubject] = useState<string>("");
-    const translator = useTranslator();
+    const { langT } = useTranslator();
     const subjectTitles = useSubjectTitlesSelector();
 
     const handleClickOpen = () => {
@@ -29,7 +29,7 @@ export const ColumnSubject: FunctionComponent<IColumnSubject> = ({ setSelectedIn
             {
                 type: ModifySubjectsTypes.ADD_SUBJECT,
                 value: {
-                    subject: { title: dialogInputNewSubject === "" ? translator.DIALOG.TEXT_FIELD_DEFAULT_SUBJECT : dialogInputNewSubject, items: [] },
+                    subject: { title: dialogInputNewSubject === "" ? langT.DIALOG.TEXT_FIELD_DEFAULT_SUBJECT : dialogInputNewSubject, items: [] },
                 },
             }
         );
@@ -46,22 +46,22 @@ export const ColumnSubject: FunctionComponent<IColumnSubject> = ({ setSelectedIn
             <AddButton onClick={handleClickOpen}/>
             {itemSubjects}
             <Dialog open={openDialog} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">{translator.DIALOG.TITLE_ADD_SUBJECT}</DialogTitle>
+                <DialogTitle id="form-dialog-title">{langT.DIALOG.TITLE_ADD_SUBJECT}</DialogTitle>
                 <DialogContent>
                     <TextField
                         autoFocus
                         required
                         margin="dense"
                         id="standard-required"
-                        label={translator.DIALOG.TEXT_FIELD_LABEL_SUBJECT}
+                        label={langT.DIALOG.TEXT_FIELD_LABEL_SUBJECT}
                         type="email"
                         fullWidth
                         onChange={onDialogNewSubjectChange}
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary"> {translator.DIALOG.BUTTON_CANCEL} </Button>
-                    <Button onClick={handleSave} color="primary"> {translator.DIALOG.BUTTON_SAVE} </Button>
+                    <Button onClick={handleClose} color="primary"> {langT.DIALOG.BUTTON_CANCEL} </Button>
+                    <Button onClick={handleSave} color="primary"> {langT.DIALOG.BUTTON_SAVE} </Button>
                 </DialogActions>
             </Dialog>
         </div>

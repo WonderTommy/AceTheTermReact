@@ -22,7 +22,7 @@ export const PageTest: FunctionComponent = () => {
         setAnchorEl(null);
     };
     const value = useValueSelector();
-    const translator = useTranslator();
+    const { langT } = useTranslator();
     const incrementValue = () => dispatch(
         {
         type: ChangeValueTypes.Increment,
@@ -63,7 +63,7 @@ export const PageTest: FunctionComponent = () => {
             <Test value={value} />
             <RoundButton text={"+"} onPress={incrementValue}/>
             <RoundButton text={"-"} onPress={decrementValue}/>
-            <RoundButton text={translator.BUTTON.CALCULATION} onPress={decrementValue}/>
+            <RoundButton text={langT.BUTTON.CALCULATION} onPress={decrementValue}/>
             <RoundButton text={"Set EN"} onPress={setEN}/>
             <RoundButton text={"Set CN_SI"} onPress={setCN}/>
             <RoundButton text={"Set JP"} onPress={setJP}/>

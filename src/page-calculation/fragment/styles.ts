@@ -15,3 +15,11 @@ export const ResultItemData = styled.div`
     font-size: 24px;
     text-align: center;
 `
+interface IResultWeight {
+    color: string;
+}
+export const ResultWeight = styled.div`
+    text-align: center;
+    font-weight: bold;
+    color: ${({ color }: IResultWeight) => (color)};
+`

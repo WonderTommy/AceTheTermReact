@@ -13,9 +13,27 @@ const initialState: ISubject[] = [
             },
             {
                 title: "Assignment 2",
-                points: 18.0,
-                fullPoints: 20.0,
+                points: 17.222222,
+                fullPoints: 25.0,
                 weight: 10.0,
+            },
+            {
+                title: "Assignment 3",
+                points: 23,
+                fullPoints: 25.0,
+                weight: 10.0,
+            },
+            {
+                title: "Midterm",
+                points: 36,
+                fullPoints: 40,
+                weight: 30
+            },
+            {
+                title: "Final",
+                points: 79,
+                fullPoints: 100,
+                weight: 40,
             },
         ],
     },
@@ -27,6 +45,24 @@ const initialState: ISubject[] = [
                 points: 20.0,
                 fullPoints: 25.0,
                 weight: 10.0,
+            },
+            {
+                title: "Assignment 2",
+                points: 17.222222,
+                fullPoints: 25.0,
+                weight: 10.0,
+            },
+            {
+                title: "Assignment 3",
+                points: 23,
+                fullPoints: 25.0,
+                weight: 10.0,
+            },
+            {
+                title: "Midterm",
+                points: 36,
+                fullPoints: 40,
+                weight: 30
             },
         ],
     },

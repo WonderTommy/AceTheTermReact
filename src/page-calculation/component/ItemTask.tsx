@@ -12,7 +12,7 @@ export interface IItemTask {
 }
 
 export const ItemTask: FunctionComponent<IItemTask> = ({ index, title, points, fullPoints, weight }) => {
-    const translator = useTranslator();
+    const { langT } = useTranslator();
     const [color, setColor] = useState<string>("white");
 
     const mouseEnterAction = () => {
@@ -36,7 +36,7 @@ export const ItemTask: FunctionComponent<IItemTask> = ({ index, title, points, f
             </styled.RowItemTask>
             <styled.RowItemTask>
                 <div>
-                    {`${translator.CALCULATION_ITEM_LABEL_POINTS}${points}`}
+                    {`${langT.CALCULATION_ITEM_LABEL_POINTS}${points}`}
                 </div>
                 <div>
                     {fullPoints === 0 ? 0 : String(points/fullPoints*weight).length > 5 ? String(points/fullPoints*weight).substring(0, 6) : String(points/fullPoints*weight)}
@@ -44,12 +44,12 @@ export const ItemTask: FunctionComponent<IItemTask> = ({ index, title, points, f
             </styled.RowItemTask>
             <styled.RowItemTask>
                 <div>
-                    {`${translator.CALCULATION_ITEM_LABEL_FULL_POINTS}${fullPoints}`}
+                    {`${langT.CALCULATION_ITEM_LABEL_FULL_POINTS}${fullPoints}`}
                 </div>
             </styled.RowItemTask>
             <styled.RowItemTask>
                 <div>
-                    {`${translator.CALCULATION_ITEM_LABEL_WEIGHT}${weight}%`}
+                    {`${langT.CALCULATION_ITEM_LABEL_WEIGHT}${weight}%`}
                 </div>
             </styled.RowItemTask>
             <Divider/>

@@ -18,7 +18,7 @@ export const ColumnTask: FunctionComponent<IColumnTask> = ({ subjectIndex }) => 
 
 
     const itemTasksData = useSubjectSelector(subjectIndex);
-    const translator = useTranslator();
+    const { langT } = useTranslator();
 
     const itemTasks = itemTasksData ? itemTasksData.items.map((value, index) => <ItemTask index={index} { ...value }/>) : [];
 
@@ -43,7 +43,7 @@ export const ColumnTask: FunctionComponent<IColumnTask> = ({ subjectIndex }) => 
                     item: {
                         index: subjectIndex,
                         item: {
-                            title: newItemName === "" ? translator.DIALOG.TEXT_FIELD_DEFAULT_SUBJECT : newItemName,
+                            title: newItemName === "" ? langT.DIALOG.TEXT_FIELD_DEFAULT_SUBJECT : newItemName,
                             points: newItemPoints === "" ? 0 : parseFloat(newItemPoints),
                             fullPoints: newItemFullPoints === "" ? 0 : parseFloat(newItemFullPoints),
                             weight: newItemWeight === "" ? 0 : parseFloat(newItemWeight),
@@ -81,18 +81,18 @@ export const ColumnTask: FunctionComponent<IColumnTask> = ({ subjectIndex }) => 
             </div>
             {itemTasks.length > 0 ? itemTasks : (
                 <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", fontSize: 20, fontWeight: "bold", color: "gray" }}>
-                    {translator.MESSAGE_NO_TASK_TO_SHOW}
+                    {langT.MESSAGE_NO_TASK_TO_SHOW}
                 </div>
             )}
             <Dialog open={openDialog} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">{translator.DIALOG.TITLE_ADD_ITEM}</DialogTitle>
+                <DialogTitle id="form-dialog-title">{langT.DIALOG.TITLE_ADD_ITEM}</DialogTitle>
                 <DialogContent>
                     <TextField
                         autoFocus
                         required
                         margin="dense"
                         id="standard-required"
-                        label={translator.DIALOG.TEXT_FIELD_LABEL_ITEM_NAME}
+                        label={langT.DIALOG.TEXT_FIELD_LABEL_ITEM_NAME}
                         type="email"
                         fullWidth
                         onChange={onNewItemNameChange}
@@ -102,7 +102,7 @@ export const ColumnTask: FunctionComponent<IColumnTask> = ({ subjectIndex }) => 
                         required
                         margin="dense"
                         id="standard-required"
-                        label={translator.DIALOG.TEXT_FIELD_LABEL_POINTS}
+                        label={langT.DIALOG.TEXT_FIELD_LABEL_POINTS}
                         type="email"
                         fullWidth
                         onChange={onNewItemPointsChange}
@@ -112,7 +112,7 @@ export const ColumnTask: FunctionComponent<IColumnTask> = ({ subjectIndex }) => 
                         required
                         margin="dense"
                         id="standard-required"
-                        label={translator.DIALOG.TEXT_FIELD_LABEL_FULL_POINTS}
+                        label={langT.DIALOG.TEXT_FIELD_LABEL_FULL_POINTS}
                         type="email"
                         fullWidth
                         onChange={onNewItemFullPointsChange}
@@ -122,15 +122,15 @@ export const ColumnTask: FunctionComponent<IColumnTask> = ({ subjectIndex }) => 
                         required
                         margin="dense"
                         id="standard-required"
-                        label={translator.DIALOG.TEXT_FIELD_LABEL_WEIGHT}
+                        label={langT.DIALOG.TEXT_FIELD_LABEL_WEIGHT}
                         type="email"
                         fullWidth
                         onChange={onNewItemWeightChange}
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary"> {translator.DIALOG.BUTTON_CANCEL} </Button>
-                    <Button onClick={handleSave} color="primary"> {translator.DIALOG.BUTTON_SAVE} </Button>
+                    <Button onClick={handleClose} color="primary"> {langT.DIALOG.BUTTON_CANCEL} </Button>
+                    <Button onClick={handleSave} color="primary"> {langT.DIALOG.BUTTON_SAVE} </Button>
                 </DialogActions>
             </Dialog>
         </div>
@@ -138,7 +138,7 @@ export const ColumnTask: FunctionComponent<IColumnTask> = ({ subjectIndex }) => 
     const emptyPage = (
         <div>
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", marginTop: 24, fontSize: 20, fontWeight: "bold", color: "gray" }}>
-                {translator.MESSAGE_NO_SUBJECT_SELECTED}
+                {langT.MESSAGE_NO_SUBJECT_SELECTED}
             </div>
         </div>
     );
