@@ -105,7 +105,7 @@ export const ColumnSubject: FunctionComponent<IColumnSubject> = ({ setSelectedIn
             </div>
             {/* {itemSubjects} */}
 
-            <FlexibleList editMode={editMode} elements={itemSubjects} onSelect={setSelectedIndex} onToggleChecked={onToggleChecked}/>
+            <FlexibleList editMode={editMode} width={240} elements={itemSubjects} onSelect={setSelectedIndex} onToggleChecked={onToggleChecked}/>
             <Dialog open={openDialog} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">{langT.DIALOG.TITLE_ADD_SUBJECT}</DialogTitle>
                 <DialogContent>

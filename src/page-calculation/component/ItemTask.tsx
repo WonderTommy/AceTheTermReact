@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 import { Divider } from "../../mod-divider";
 import { useTranslator } from "../../constants";
 import * as styled from "./styles";
@@ -13,19 +13,9 @@ export interface IItemTask {
 
 export const ItemTask: FunctionComponent<IItemTask> = ({ index, title, points, fullPoints, weight }) => {
     const { langT } = useTranslator();
-    const [color, setColor] = useState<string>("white");
 
-    const mouseEnterAction = () => {
-        setColor("#D3D3D3");
-    };
-
-    const mouseLeaveAction = () => {
-        setColor("white");
-    };
     return (
-        <div style={{ background: color, display: "flex", flexDirection: "column", paddingTop: 4 }}
-            onMouseEnter={mouseEnterAction}
-            onMouseLeave={mouseLeaveAction}>
+        <div style={{ display: "flex", flexDirection: "column", paddingTop: 4 }}>
             <styled.RowItemTask>
                 <styled.RowItemTitle>
                     {title}

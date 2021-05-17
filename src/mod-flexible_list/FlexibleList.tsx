@@ -3,12 +3,14 @@ import { ListRow } from "./component";
 
 interface IFlexibleList {
     editMode?: boolean;
+    changeColorOnHover?: boolean;
     elements: JSX.Element[];
+    width: number;
     onSelect?: (index: number) => () => void;
     onToggleChecked?: (index: number) => (target: boolean) => void;
 };
 
-export const FlexibleList: FunctionComponent<IFlexibleList> = ({ editMode, elements, onSelect, onToggleChecked }) => {
+export const FlexibleList: FunctionComponent<IFlexibleList> = ({ editMode, changeColorOnHover, elements, width, onSelect, onToggleChecked }) => {
     // const [checked, setChecked] = useState<Array<boolean>>(new Array(elements.length).fill(false));
     // const [editMode, setEditMode] = useState<boolean>(true);
 
@@ -29,7 +31,7 @@ export const FlexibleList: FunctionComponent<IFlexibleList> = ({ editMode, eleme
     //         </div>
     //     );
     // });
-    const rows = elements.map((value, index) => <ListRow key={index} rowContent={value} editMode={editMode ?? false} onSelect={onSelect ? onSelect(index) : (() => {})} onToggleChecked={onToggleChecked ? onToggleChecked(index) : ((target: boolean) => {})}/>);
+    const rows = elements.map((value, index) => <ListRow key={index} rowContent={value} editMode={editMode ?? false} changeColorOnMouseHover={changeColorOnHover ?? true} width={width} onSelect={onSelect ? onSelect(index) : (() => {})} onToggleChecked={onToggleChecked ? onToggleChecked(index) : ((target: boolean) => {})}/>);
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>
             {rows}

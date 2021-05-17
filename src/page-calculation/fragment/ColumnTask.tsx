@@ -1,15 +1,20 @@
 import { FunctionComponent, useState } from "react";
-import { AddButton, ItemTask } from "../component";
+import { ItemTask } from "../component";
 import { dispatch, SubjectActionTypes, useSubjectSelector } from "../../redux-components";
 import { useTranslator } from "../../constants";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 import { FlexibleList } from "../../mod-flexible_list";
+import { IconOnlyButton } from "../../mod-icon_only_button";
 
 export interface IColumnTask {
     subjectIndex: number;
 }
 
 export const ColumnTask: FunctionComponent<IColumnTask> = ({ subjectIndex }) => {
+    const [editMode, setEditMode] = useState<boolean>(false);
     const [openDialog, setOpenDialog] = useState<boolean>(false);
 
     const [newItemName, setNewItemName] = useState<string>("");
@@ -57,6 +62,10 @@ export const ColumnTask: FunctionComponent<IColumnTask> = ({ subjectIndex }) => 
         setNewItemWeight("");
     };
 
+    const handleToggleEditMode = () => {
+        setEditMode(!editMode);
+    };
+
     const onNewItemNameChange = (event: any) => {
         setNewItemName(event.target.value ?? "");
     };
@@ -70,16 +79,27 @@ export const ColumnTask: FunctionComponent<IColumnTask> = ({ subjectIndex }) => 
         setNewItemWeight(event.target.value ?? "");
     };
 
+    const AddButton = (
+        <IconOnlyButton icon={<AddIcon/>} onClick={handleClickOpen}/>
+    );
+
+    const EditButton = (
+        <IconOnlyButton icon={<EditIcon/>} onClick={handleToggleEditMode}/>
+    );
+
     const columnContent = (
         <div style={{ display: "flex", flexDirection: "column", paddingTop: 4, paddingLeft: 12, paddingRight: 12 }}>
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", paddingBottom: 8 }}>
                 <div style={{ fontSize: 24, fontWeight: "bold", marginTop: 12 }}>
                     {itemTasksData ? itemTasksData.title : ""}
                 </div>
-                <AddButton onClick={handleClickOpen}/>
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                    {AddButton}
+                    {EditButton}
+                </div>
             </div>
             {itemTasks.length > 0 ? 
-                itemTasks : (
+                <FlexibleList editMode={editMode} width={320} elements={itemTasks}/> : (
                 <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", fontSize: 20, fontWeight: "bold", color: "gray" }}>
                     {langT.MESSAGE_NO_TASK_TO_SHOW}
                 </div>
