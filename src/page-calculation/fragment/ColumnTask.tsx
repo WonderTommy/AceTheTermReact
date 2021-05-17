@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from "react";
 import { AddButton, ItemTask } from "../component";
-import { dispatch, ModifySubjectsTypes, useSubjectSelector } from "../../redux-components";
+import { dispatch, SubjectActionTypes, useSubjectSelector } from "../../redux-components";
 import { useTranslator } from "../../constants";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
 import { FlexibleList } from "../../mod-flexible_list";
@@ -39,16 +39,14 @@ export const ColumnTask: FunctionComponent<IColumnTask> = ({ subjectIndex }) => 
         setOpenDialog(false);
         dispatch(
             {
-                type: ModifySubjectsTypes.ADD_ITEM,
+                type: SubjectActionTypes.ADD_ITEM,
                 value: {
+                    index: subjectIndex,
                     item: {
-                        index: subjectIndex,
-                        item: {
-                            title: newItemName === "" ? langT.DIALOG.TEXT_FIELD_DEFAULT_SUBJECT : newItemName,
-                            points: newItemPoints === "" ? 0 : parseFloat(newItemPoints),
-                            fullPoints: newItemFullPoints === "" ? 0 : parseFloat(newItemFullPoints),
-                            weight: newItemWeight === "" ? 0 : parseFloat(newItemWeight),
-                        },
+                        title: newItemName === "" ? langT.DIALOG.TEXT_FIELD_DEFAULT_SUBJECT : newItemName,
+                        points: newItemPoints === "" ? 0 : parseFloat(newItemPoints),
+                        fullPoints: newItemFullPoints === "" ? 0 : parseFloat(newItemFullPoints),
+                        weight: newItemWeight === "" ? 0 : parseFloat(newItemWeight),
                     },
                 },
             }

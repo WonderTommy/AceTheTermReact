@@ -2,7 +2,7 @@ import { FunctionComponent, useState, useEffect } from "react";
 import { ItemSubject } from "../component";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
 import { useTranslator } from "../../constants";
-import { dispatch, ModifySubjectsTypes, useSubjectTitlesSelector } from "../../redux-components";
+import { dispatch, SubjectActionTypes, useSubjectTitlesSelector } from "../../redux-components";
 import { FlexibleList } from "../../mod-flexible_list";
 import { IconOnlyButton } from "../../mod-icon_only_button";
 import AddIcon from "@material-ui/icons/Add";
@@ -34,6 +34,10 @@ export const ColumnSubject: FunctionComponent<IColumnSubject> = ({ setSelectedIn
 
     const handleDelete = () => {
         console.log(checkedIndex);
+        dispatch({
+            type: SubjectActionTypes.REMOVE_SUBJECT,
+            value: checkedIndex,
+        });
         setEditMode(false);
     }
 
@@ -50,10 +54,8 @@ export const ColumnSubject: FunctionComponent<IColumnSubject> = ({ setSelectedIn
         setOpenDialog(false);
         dispatch(
             {
-                type: ModifySubjectsTypes.ADD_SUBJECT,
-                value: {
-                    subject: { title: dialogInputNewSubject === "" ? langT.DIALOG.TEXT_FIELD_DEFAULT_SUBJECT : dialogInputNewSubject, items: [] },
-                },
+                type: SubjectActionTypes.ADD_SUBJECT,
+                value: { title: dialogInputNewSubject === "" ? langT.DIALOG.TEXT_FIELD_DEFAULT_SUBJECT : dialogInputNewSubject, items: [] },
             }
         );
         setDialogInputNewSubject("");

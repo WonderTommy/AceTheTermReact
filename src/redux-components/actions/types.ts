@@ -1,4 +1,4 @@
-export type IActionType = IChangeValue | ILogged | ISetLanguage | ISetPage | IModifySubjects | ISubjectActions;
+export type IActionType = IChangeValue | ILogged | ISetLanguage | ISetPage | ISubjectActions;
 
 export interface IChangeValue {
     type: ChangeValueTypes;
@@ -50,38 +50,27 @@ export enum IPage {
     HISTORY = "HISTORY",
 }
 
-export interface IModifySubjects {
-    type: ModifySubjectsTypes,
-    value: {
-        subject?: ISubject,
-        item?: {
-            index: number,
-            item: ISubjectItem,
-        },
-    },
-}
-
-type ISubjectActions = IAddSubject | IRemoveSubject;
+export type ISubjectActions = IAddSubject | IRemoveSubject | IAddItem;
 
 export interface IAddSubject {
-    type: ModifySubjectsTypes;
+    type: SubjectActionTypes.ADD_SUBJECT;
     value: ISubject;
 }
 
 export interface IRemoveSubject {
-    type: ModifySubjectsTypes;
+    type: SubjectActionTypes.REMOVE_SUBJECT;
     value: number[];
 }
 
 export interface IAddItem {
-    type: ModifySubjectsTypes;
+    type: SubjectActionTypes.ADD_ITEM;
     value: {
         index: number,
         item: ISubjectItem,
     }
 }
 
-export enum ModifySubjectsTypes {
+export enum SubjectActionTypes {
     ADD_SUBJECT = "ADD_SUBJECT",
     REMOVE_SUBJECT = "REMOVE_SUBJECT",
     ADD_ITEM = "ADD_ITEM",

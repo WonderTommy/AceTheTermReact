@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import { ModifySubjectsTypes, IModifySubjects, ISubject } from "../actions";
+import { SubjectActionTypes, ISubjectActions, ISubjectItem, ISubject } from "../actions";
 
 const initialState: ISubject[] = [
     {
@@ -72,18 +72,32 @@ const initialState: ISubject[] = [
     }
 ];
 
-export const modifySubjectsReducer: Reducer<ISubject[], IModifySubjects> = (oldState = initialState, action) => {
+export const modifySubjectsReducer: Reducer<ISubject[], ISubjectActions> = (oldState = initialState, action) => {
     let { value, type } = action;
     var newState = [ ...oldState ];
     switch (type) {
-      case ModifySubjectsTypes.ADD_SUBJECT:
-        newState.push(value.subject!)
+      case SubjectActionTypes.ADD_SUBJECT:
+        newState.push(value as ISubject);
         return newState;
-      case ModifySubjectsTypes.REMOVE_SUBJECT:
-        newState = oldState.filter(subject => subject.title !== value.subject!.title);
+      case SubjectActionTypes.REMOVE_SUBJECT:
+        const actionValue = (value as number[]).sort((a, b) => {
+            if (a < b) {
+                return 1;
+            } else if (a > b) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+        // newState = oldState.filter(subject => subject.title !== value.subject!.title);
+        actionValue.forEach((value) => {
+            oldState.splice(value, 1);
+        });
+        newState = [...oldState];
         return newState;
-      case ModifySubjectsTypes.ADD_ITEM:
-        newState[value.item!.index].items.push(value.item!.item);
+      case SubjectActionTypes.ADD_ITEM:
+        const { index, item } = value as { index: number, item: ISubjectItem };
+        newState[index].items.push(item);
         return newState;
       default:
         return oldState;
