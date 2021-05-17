@@ -88,14 +88,17 @@ export const PageTest: FunctionComponent = () => {
     //         <PageCalculation/>
     //     </div>
 //   );
-    const element = (
-        <div style={{ height: 40, width: 300, display: "flex", flexDirection: "column", justifyContent: "center" }}>
-            {"item"}
-        </div>
-    );
+    // const element = (
+    //     <div style={{ height: 40, width: 300, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+    //         {"item"}
+    //     </div>
+    // );
 
-    const elements = [element, element, element, element, element, element, element];
+    // const elements = [element, element, element, element, element, element, element];
+    // return (
+    //     <FlexibleList elements={elements}/>
+    // );
     return (
-        <FlexibleList elements={elements}/>
+        <div>tesat</div>
     );
 }

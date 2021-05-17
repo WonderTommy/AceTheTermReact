@@ -3,6 +3,7 @@ import { AddButton, ItemTask } from "../component";
 import { dispatch, ModifySubjectsTypes, useSubjectSelector } from "../../redux-components";
 import { useTranslator } from "../../constants";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
+import { FlexibleList } from "../../mod-flexible_list";
 
 export interface IColumnTask {
     subjectIndex: number;
@@ -20,7 +21,7 @@ export const ColumnTask: FunctionComponent<IColumnTask> = ({ subjectIndex }) => 
     const itemTasksData = useSubjectSelector(subjectIndex);
     const { langT } = useTranslator();
 
-    const itemTasks = itemTasksData ? itemTasksData.items.map((value, index) => <ItemTask index={index} { ...value }/>) : [];
+    const itemTasks = itemTasksData ? itemTasksData.items.map((value, index) => <ItemTask key={index} index={index} { ...value }/>) : [];
 
     const handleClickOpen = () => {
         setOpenDialog(true);
@@ -79,7 +80,8 @@ export const ColumnTask: FunctionComponent<IColumnTask> = ({ subjectIndex }) => 
                 </div>
                 <AddButton onClick={handleClickOpen}/>
             </div>
-            {itemTasks.length > 0 ? itemTasks : (
+            {itemTasks.length > 0 ? 
+                itemTasks : (
                 <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", fontSize: 20, fontWeight: "bold", color: "gray" }}>
                     {langT.MESSAGE_NO_TASK_TO_SHOW}
                 </div>

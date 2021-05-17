@@ -1,4 +1,4 @@
-export type IActionType = IChangeValue | ILogged | ISetLanguage | ISetPage | IModifySubjects;
+export type IActionType = IChangeValue | ILogged | ISetLanguage | ISetPage | IModifySubjects | ISubjectActions;
 
 export interface IChangeValue {
     type: ChangeValueTypes;
@@ -59,6 +59,26 @@ export interface IModifySubjects {
             item: ISubjectItem,
         },
     },
+}
+
+type ISubjectActions = IAddSubject | IRemoveSubject;
+
+export interface IAddSubject {
+    type: ModifySubjectsTypes;
+    value: ISubject;
+}
+
+export interface IRemoveSubject {
+    type: ModifySubjectsTypes;
+    value: number[];
+}
+
+export interface IAddItem {
+    type: ModifySubjectsTypes;
+    value: {
+        index: number,
+        item: ISubjectItem,
+    }
 }
 
 export enum ModifySubjectsTypes {

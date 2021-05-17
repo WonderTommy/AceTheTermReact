@@ -14,7 +14,7 @@ export const PageCalculation: FunctionComponent = () => {
     return(
         <div style={{ height: "100vh", display: "flex", flexDirection: "row" }}>
             <div style={{ display: "flex", flexDirection: "row" }}>
-                <ColumnSubject setSelectedIndex={setSelectedIndex} />
+                <ColumnSubject setSelectedIndex={(index: number) => () => { setSelectedIndex(index) }} />
                 <div style={{ background: "gray", height: "100%", width: 1 }}/>
                 <ColumnTask {...{ subjectIndex: selectedIndex }}/>
                 <div style={{ background: "gray", height: "100%", width: 1 }}/>

@@ -3,12 +3,10 @@ import { Divider } from "../../mod-divider";
 import { useState } from "react";
 
 export interface IItemSubject {
-    index: number;
     title: string;
-    setSelectedIndex: (index: number) => void;
 }
 
-export const ItemSubject: FunctionComponent<IItemSubject> = ({ title, index, setSelectedIndex }) => {
+export const ItemSubject: FunctionComponent<IItemSubject> = ({ title }) => {
     const [color, setColor] = useState<string>("white");
 
     const mouseEnterAction = () => {
@@ -20,8 +18,7 @@ export const ItemSubject: FunctionComponent<IItemSubject> = ({ title, index, set
     };
     return (
         <div 
-            style={{ background: color, display: "flex", flexDirection: "column", padding: 0, paddingLeft: 12, width: 240 }}
-            onClick={() => { setSelectedIndex(index) }} >
+            style={{ background: color, display: "flex", flexDirection: "column", padding: 0, paddingLeft: 12, width: 240 }}>
             <div 
                 onMouseEnter={mouseEnterAction}
                 onMouseLeave={mouseLeaveAction}

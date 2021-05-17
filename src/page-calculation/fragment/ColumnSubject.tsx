@@ -1,18 +1,41 @@
-import { FunctionComponent, useState } from "react";
-import { AddButton, ItemSubject } from "../component";
+import { FunctionComponent, useState, useEffect } from "react";
+import { ItemSubject } from "../component";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
 import { useTranslator } from "../../constants";
 import { dispatch, ModifySubjectsTypes, useSubjectTitlesSelector } from "../../redux-components";
+import { FlexibleList } from "../../mod-flexible_list";
+import { IconOnlyButton } from "../../mod-icon_only_button";
+import AddIcon from "@material-ui/icons/Add";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 export interface IColumnSubject {
-    setSelectedIndex: (index: number) => void;
+    setSelectedIndex: (index: number) => () => void;
 }
 
 export const ColumnSubject: FunctionComponent<IColumnSubject> = ({ setSelectedIndex }) => {
+    const [checkedIndex, setCheckedIndex] = useState<number[]>([]);
+
+    const [editMode, setEditMode] = useState<boolean>(false);
     const [openDialog, setOpenDialog] = useState<boolean>(false);
     const [dialogInputNewSubject, setDialogInputNewSubject] = useState<string>("");
     const { langT } = useTranslator();
     const subjectTitles = useSubjectTitlesSelector();
+
+    useEffect(() => {
+        if (!editMode) {
+            setCheckedIndex([]);
+        }
+    }, [editMode]);
+
+    const toggleEditMode = () => {
+        setEditMode(!editMode);
+    };
+
+    const handleDelete = () => {
+        console.log(checkedIndex);
+        setEditMode(false);
+    }
 
     const handleClickOpen = () => {
         setOpenDialog(true);
@@ -40,11 +63,47 @@ export const ColumnSubject: FunctionComponent<IColumnSubject> = ({ setSelectedIn
         setDialogInputNewSubject(event.target.value ?? "");
     };
 
-    const itemSubjects = subjectTitles.map((value) => <ItemSubject { ...value } key={value.index} setSelectedIndex={setSelectedIndex}/>);
+    const onToggleChecked = (index: number) => (target: boolean) => {
+        var newState = [...checkedIndex];
+        if (target) {
+            newState.push(index);
+        } else {
+            newState = checkedIndex.filter(element => element !== index);
+        }
+        setCheckedIndex(newState);
+        // console.log(newState);
+    };
+
+    const AddButton = (
+        <IconOnlyButton icon={<AddIcon/>} onClick={handleClickOpen}/>
+    );
+
+    const EditButton = (
+        <IconOnlyButton icon={<EditIcon/>} onClick={toggleEditMode}/>
+    );
+
+    const DeleteButton = (
+        <IconOnlyButton icon={<DeleteIcon/>} onClick={handleDelete}/>
+    );
+
+
+    const itemSubjects = subjectTitles.map(({ title, index }) => <ItemSubject title={title} key={index}/>);
     return (
         <div style={{ display: "flex", flexDirection: "column", paddingRight: 12 }}>
-            <AddButton onClick={handleClickOpen}/>
-            {itemSubjects}
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                <div>
+                    {AddButton}
+                    {EditButton}
+                </div>
+                <div>
+                    <div style={{ display: editMode ? "flex" : "none" }}>
+                        {DeleteButton}
+                    </div>
+                </div>
+            </div>
+            {/* {itemSubjects} */}
+
+            <FlexibleList editMode={editMode} elements={itemSubjects} onSelect={setSelectedIndex} onToggleChecked={onToggleChecked}/>
             <Dialog open={openDialog} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">{langT.DIALOG.TITLE_ADD_SUBJECT}</DialogTitle>
                 <DialogContent>

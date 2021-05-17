@@ -29,7 +29,7 @@ export const LanguageMenu: FunctionComponent<ILanguageMenu> = ({ text }) => {
         setAnchorEl(null);
     };
 
-    const menuItems = Object.values(ILanguage).map((value, index) => <MenuItem onClick={setLanguage(value)}>{langT.LANGUAGE_LIST_LABELS[value]}</MenuItem>)
+    const menuItems = Object.values(ILanguage).map((value, index) => <MenuItem key={index} onClick={setLanguage(value)}>{langT.LANGUAGE_LIST_LABELS[value]}</MenuItem>)
     
     return (
         <div style={{ display: "flex" }}>
