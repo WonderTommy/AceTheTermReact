@@ -87,6 +87,10 @@ export const ColumnTask: FunctionComponent<IColumnTask> = ({ subjectIndex }) => 
         <IconOnlyButton icon={<EditIcon/>} onClick={handleToggleEditMode}/>
     );
 
+    const DeleteButton = (
+        <IconOnlyButton icon={<DeleteIcon/>} onClick={() => {}}/>
+    );
+
     const columnContent = (
         <div style={{ display: "flex", flexDirection: "column", paddingTop: 4, paddingLeft: 12, paddingRight: 12 }}>
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", paddingBottom: 8 }}>
@@ -96,6 +100,7 @@ export const ColumnTask: FunctionComponent<IColumnTask> = ({ subjectIndex }) => 
                 <div style={{ display: "flex", flexDirection: "row" }}>
                     {AddButton}
                     {EditButton}
+                    {editMode ? DeleteButton : null}
                 </div>
             </div>
             {itemTasks.length > 0 ? 

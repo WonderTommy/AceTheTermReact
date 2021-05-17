@@ -1,7 +1,5 @@
 import { FunctionComponent, useState, useEffect } from "react";
-import { ItemSubject } from "../component";
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
-import { useTranslator } from "../../constants";
+import { DialogNewSubject, ItemSubject } from "../component";
 import { dispatch, SubjectActionTypes, useSubjectTitlesSelector } from "../../redux-components";
 import { FlexibleList } from "../../mod-flexible_list";
 import { IconOnlyButton } from "../../mod-icon_only_button";
@@ -17,9 +15,7 @@ export const ColumnSubject: FunctionComponent<IColumnSubject> = ({ setSelectedIn
     const [checkedIndex, setCheckedIndex] = useState<number[]>([]);
 
     const [editMode, setEditMode] = useState<boolean>(false);
-    const [openDialog, setOpenDialog] = useState<boolean>(false);
-    const [dialogInputNewSubject, setDialogInputNewSubject] = useState<string>("");
-    const { langT } = useTranslator();
+    const [openNewSubjectDialog, setOpenNewSubjectDialog] = useState<boolean>(false);
     const subjectTitles = useSubjectTitlesSelector();
 
     useEffect(() => {
@@ -42,27 +38,7 @@ export const ColumnSubject: FunctionComponent<IColumnSubject> = ({ setSelectedIn
     }
 
     const handleClickOpen = () => {
-        setOpenDialog(true);
-    };
-
-    const handleClose = () => {
-        setOpenDialog(false);
-        setDialogInputNewSubject("");
-    };
-
-    const handleSave = () => {
-        setOpenDialog(false);
-        dispatch(
-            {
-                type: SubjectActionTypes.ADD_SUBJECT,
-                value: { title: dialogInputNewSubject === "" ? langT.DIALOG.TEXT_FIELD_DEFAULT_SUBJECT : dialogInputNewSubject, items: [] },
-            }
-        );
-        setDialogInputNewSubject("");
-    };
-
-    const onDialogNewSubjectChange = (event: any) => {
-        setDialogInputNewSubject(event.target.value ?? "");
+        setOpenNewSubjectDialog(true);
     };
 
     const onToggleChecked = (index: number) => (target: boolean) => {
@@ -106,25 +82,7 @@ export const ColumnSubject: FunctionComponent<IColumnSubject> = ({ setSelectedIn
             {/* {itemSubjects} */}
 
             <FlexibleList editMode={editMode} width={240} elements={itemSubjects} onSelect={setSelectedIndex} onToggleChecked={onToggleChecked}/>
-            <Dialog open={openDialog} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">{langT.DIALOG.TITLE_ADD_SUBJECT}</DialogTitle>
-                <DialogContent>
-                    <TextField
-                        autoFocus
-                        required
-                        margin="dense"
-                        id="standard-required"
-                        label={langT.DIALOG.TEXT_FIELD_LABEL_SUBJECT}
-                        type="email"
-                        fullWidth
-                        onChange={onDialogNewSubjectChange}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary"> {langT.DIALOG.BUTTON_CANCEL} </Button>
-                    <Button onClick={handleSave} color="primary"> {langT.DIALOG.BUTTON_SAVE} </Button>
-                </DialogActions>
-            </Dialog>
+            <DialogNewSubject openDialog={openNewSubjectDialog} closeDialog={() => { setOpenNewSubjectDialog(false) }}/>
         </div>
     );
 };
