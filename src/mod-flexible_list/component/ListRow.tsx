@@ -2,28 +2,35 @@ import { FunctionComponent, useState, useEffect } from "react";
 // import { ListCheckbox } from "./ListCheckbox";
 import { Checkbox } from "@material-ui/core";
 
-interface IListRow {
+export interface IListRow {
     rowContent: JSX.Element;
     editMode: boolean;
     changeColorOnMouseHover: boolean;
     width: number;
+    doSelectOnEditMode: boolean;
     onSelect: () => void;
     onToggleChecked: (target: boolean) => void;
 }
 
-export const ListRow: FunctionComponent<IListRow> = ({ rowContent, editMode, changeColorOnMouseHover, width, onSelect, onToggleChecked }) => {
+export const ListRow: FunctionComponent<IListRow> = ({ rowContent, editMode, changeColorOnMouseHover, width, doSelectOnEditMode, onSelect, onToggleChecked }) => {
     const [checked, setChecked] = useState<boolean>(false);
     const [color, setColor] = useState<string>("white");
 
     useEffect(() => {
-        setChecked(false);
+        setCheckedWrapper(false);
     }, [editMode]);
 
     const onSelectEditModeWrapper = () => {
-        onSelect();
-        onToggleChecked(!checked);
-        setChecked(!checked);
+        if (doSelectOnEditMode) {
+            onSelect();
+        }
+        setCheckedWrapper(!checked);
     }
+
+    const setCheckedWrapper = (target: boolean) => {
+        onToggleChecked(target);
+        setChecked(target);
+    };
 
     const mouseEnterAction = () => {
         setColor("#D3D3D3");

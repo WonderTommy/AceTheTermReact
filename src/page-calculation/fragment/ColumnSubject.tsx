@@ -19,6 +19,7 @@ export const ColumnSubject: FunctionComponent<IColumnSubject> = ({ setSelectedIn
     const [editMode, setEditMode] = useState<boolean>(false);
     const [openNewSubjectDialog, setOpenNewSubjectDialog] = useState<boolean>(false);
     const [openSubjectAlertDialog, setOpenSubjectAlertDialog] = useState<boolean>(false);
+    const [openConfirmDeleteDialog, setOpenConfirmDeleteDialog] = useState<boolean>(false);
     const subjectTitles = useSubjectTitlesSelector();
 
     const { langT } = useTranslator();
@@ -36,15 +37,19 @@ export const ColumnSubject: FunctionComponent<IColumnSubject> = ({ setSelectedIn
     const handleDelete = () => {
         // console.log(checkedIndex);
         if (checkedIndex.length > 0) {
-            dispatch({
-                type: SubjectActionTypes.REMOVE_SUBJECT,
-                value: checkedIndex,
-            });
-            setEditMode(false);
+            setOpenConfirmDeleteDialog(true);
         } else {
             setOpenSubjectAlertDialog(true);
         }
     }
+
+    const dispatchDelete = () => {
+        dispatch({
+            type: SubjectActionTypes.REMOVE_SUBJECT,
+            value: checkedIndex,
+        });
+        setEditMode(false);
+    };
 
     const handleClickOpen = () => {
         setOpenNewSubjectDialog(true);
@@ -92,7 +97,8 @@ export const ColumnSubject: FunctionComponent<IColumnSubject> = ({ setSelectedIn
 
             <FlexibleList editMode={editMode} width={240} elements={itemSubjects} onSelect={setSelectedIndex} onToggleChecked={onToggleChecked}/>
             <DialogNewSubject openDialog={openNewSubjectDialog} closeDialog={() => { setOpenNewSubjectDialog(false) }}/>
-            <AlertDialog message={langT.ALERT_MESSAGE_SELECT_AT_LEAST_ONE_SUBJECT} buttonLabel={langT.ALERT_BUTTON_OK} open={openSubjectAlertDialog} closeDialog={ () => { setOpenSubjectAlertDialog(false) } }/>
+            <AlertDialog message={langT.ALERT_MESSAGE_SELECT_AT_LEAST_ONE_ITEM_TO_DELETE} okButtonLabel={langT.ALERT_BUTTON_OK} open={openSubjectAlertDialog} closeDialog={ () => { setOpenSubjectAlertDialog(false) } } onSave={() => { setOpenSubjectAlertDialog(false) }}/>
+            <AlertDialog message={langT.ALERT_MESSAGE_CONFIRM_DELETE} okButtonLabel={langT.ALERT_BUTTON_OK} cancelButtonLabel={langT.DIALOG.BUTTON_CANCEL} open={openConfirmDeleteDialog} closeDialog={ () => { setOpenConfirmDeleteDialog(false) }} onSave={dispatchDelete}/>
         </div>
     );
 };
