@@ -99,6 +99,22 @@ export const modifySubjectsReducer: Reducer<ISubject[], ISubjectActions> = (oldS
         const { index, item } = value as { index: number, item: ISubjectItem };
         newState[index].items.push(item);
         return newState;
+      case SubjectActionTypes.REMOVE_ITEM:
+        const { index: subjectIndex, itemIndex } = value as { index: number, itemIndex: number[] };
+        const selectedIndex = itemIndex.sort((a, b) => {
+            if (a < b) {
+                return 1;
+            } else if (a > b) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+        newState = [...oldState]
+        selectedIndex.forEach((value) => {
+            newState[subjectIndex].items.splice(value, 1);
+        });
+        return newState;
       default:
         return oldState;
     }

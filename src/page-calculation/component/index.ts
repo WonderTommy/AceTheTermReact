@@ -3,3 +3,4 @@ export * from "./EditButton";
 export * from "./ItemSubject";
 export * from "./ItemTask";
 export * from "./DialogNewSubject";
+export * from "./DialogNewTask";

@@ -52,7 +52,7 @@ export const ListHeader: FunctionComponent<IListHeader> = ({ title, setEditMode,
     );
     return (
         title ? (
-            <div style={{ display: "flex", flexDirection: "row" }}>
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                 <div style={{ fontSize: 24, fontWeight: "bold", marginTop: 12 }}>{title}</div>
                 {Buttons}
             </div>
