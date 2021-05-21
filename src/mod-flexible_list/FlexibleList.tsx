@@ -1,52 +1,78 @@
-import { FastRewindTwoTone } from "@material-ui/icons";
-import { FunctionComponent } from "react";
-import { ListRow, IListRow } from "./component";
+import { FunctionComponent, useState, useEffect } from "react";
+import { ListHeader, IListHeader, ListRow, IListRow } from "./component";
 
 interface IFlexibleList {
-    editMode?: boolean;
+    hasEditMode?: boolean;
     changeColorOnHover?: boolean;
     elements: JSX.Element[];
     width: number;
     doSelectOnEditMode?: boolean;
     onSelect?: (index: number) => () => void;
-    onToggleChecked?: (index: number) => (target: boolean) => void;
+
+    title?: string;
+    onAddItem?: () => void;
+    onDeleteItem?: (selectedIndex: number[]) => void;
 };
 
-export const FlexibleList: FunctionComponent<IFlexibleList> = ({ editMode, changeColorOnHover, elements, width, doSelectOnEditMode, onSelect, onToggleChecked }) => {
-    // const [checked, setChecked] = useState<Array<boolean>>(new Array(elements.length).fill(false));
-    // const [editMode, setEditMode] = useState<boolean>(true);
+export const FlexibleList: FunctionComponent<IFlexibleList> = (props) => {
+    const { 
+        hasEditMode,
+        changeColorOnHover,
+        elements,
+        width,
+        doSelectOnEditMode,
+        onSelect,
+        title,
+        onAddItem,
+        onDeleteItem,
+    } = props;
+    const [editMode, setEditMode] = useState<boolean>(false);
+    const [checkedIndex, setCheckedIndex] = useState<number[]>([]);
 
-    // const onItemSelected = (index: number) => () => {
-    //     if (editMode) {
-    //         const newState = [...checked];
-    //         newState[index] = !newState[index];
-    //         setChecked(newState);
-    //     }
-    // };
+    useEffect(() => {
+        setCheckedIndex([]);
+    }, [editMode]);
 
-    // console.log(checked);
-    // const rows = elements.map((value, index) => {
-    //     return (
-    //         <div key={index} onClick={onItemSelected(index)} style={{ display: "flex", flexDirection: "row"}}>
-    //             <ListCheckbox visible={editMode} checked={checked[index]}/>
-    //             {value}
-    //         </div>
-    //     );
-    // });
+    const onToggleChecked = (index: number) => (target: boolean) => {
+        var newState = [...checkedIndex];
+        if (target) {
+            newState.push(index);
+        } else {
+            newState = checkedIndex.filter(element => element !== index);
+        }
+        setCheckedIndex(newState);
+        // console.log(newState);
+    };
+
+    const headerData: IListHeader = {
+        title,
+        setEditMode: hasEditMode ? setEditMode : undefined,
+        editMode: hasEditMode ? editMode : undefined,
+        onAddItem,
+        onDeleteItem: onDeleteItem ? () => { 
+            onDeleteItem(checkedIndex);
+            if (checkedIndex.length > 0) {
+                setEditMode(false);
+            }
+        } : undefined,
+    };
+
     const rowData: IListRow[] = elements.map((value, index) => {
         return {
             rowContent: value,
-            editMode: editMode ?? false,
+            editMode: hasEditMode ? editMode : false,
             changeColorOnMouseHover: changeColorOnHover ?? true,
             width,
             doSelectOnEditMode: doSelectOnEditMode ?? true,
             onSelect: onSelect ? onSelect(index) : (() => {}),
-            onToggleChecked: onToggleChecked ? onToggleChecked(index) : ((target: boolean) => {}),
+            onToggleChecked: onToggleChecked(index),
         };
     });
+    const header = <ListHeader { ...headerData }/>
     const rows = rowData.map((value, index) => <ListRow key={index} { ...value }/>);
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>
+            {header}
             {rows}
         </div>
     );

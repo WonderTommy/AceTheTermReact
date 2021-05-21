@@ -3,9 +3,8 @@ import { IconButton } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
-import { TrendingUpRounded } from "@material-ui/icons";
 
-interface IListHeader {
+export interface IListHeader {
     title?: string;
     setEditMode?: (target: boolean) => void;
     editMode?: boolean;
@@ -26,20 +25,28 @@ export const ListHeader: FunctionComponent<IListHeader> = ({ title, setEditMode,
         </IconButton>
     ) : null;
 
-    const onEditButtonClick = setEditMode && (editMode !== null) ? () => {
+    const onEditButtonClick = setEditMode && (editMode !== undefined) ? () => {
         setEditMode(!editMode);
     } : null;
 
     const EditButton = onEditButtonClick ? (
         <IconButton onClick={onEditButtonClick} style={{ width: 48 }}>
-          <DeleteIcon/>
+          <EditIcon/>
         </IconButton>
     ) : null;
 
-    const Buttons = (
+    const Buttons = title ? (
         <div>
             {AddButton}
             {EditButton}
+            {DeleteButton}
+        </div>
+    ) : (
+        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+            <div>
+                {AddButton}
+                {EditButton}
+            </div>
             {DeleteButton}
         </div>
     );

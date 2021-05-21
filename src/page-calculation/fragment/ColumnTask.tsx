@@ -103,7 +103,7 @@ export const ColumnTask: FunctionComponent<IColumnTask> = ({ subjectIndex }) => 
                 </div>
             </div>
             {itemTasks.length > 0 ? 
-                <FlexibleList editMode={editMode} width={360} elements={itemTasks}/> : (
+                <FlexibleList width={360} elements={itemTasks}/> : (
                 <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", fontSize: 20, fontWeight: "bold", color: "gray" }}>
                     {langT.MESSAGE_NO_TASK_TO_SHOW}
                 </div>
