@@ -1,19 +1,35 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useState, useEffect } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
 import { useTranslator } from "../../constants";
-import { dispatch, SubjectActionTypes } from "../../redux-components";
+import { dispatch, SubjectActionTypes, useTaskSelector } from "../../redux-components";
 
 interface IDialogNewTask {
     openDialog: boolean;
     closeDialog: () => void;
     subjectIndex: number;
+
+    taskIndex?: number;
+    itemName?: string;
+    itemPoints?: string;
+    itemFullPoints?: string;
+    itemWeight?: string;
 }
 
-export const DialogNewTask: FunctionComponent<IDialogNewTask> = ({ openDialog, closeDialog, subjectIndex }) => {
-    const [newItemName, setNewItemName] = useState<string>("");
-    const [newItemPoints, setNewItemPoints] = useState<string>("");
-    const [newItemFullPoints, setNewItemFullPoints] = useState<string>("");
-    const [newItemWeight, setNewItemWeight] = useState<string>("");
+export const DialogNewTask: FunctionComponent<IDialogNewTask> = ({ openDialog, closeDialog, subjectIndex, taskIndex, itemName, itemPoints, itemFullPoints, itemWeight }) => {
+    const curTask = useTaskSelector(subjectIndex, taskIndex ?? -1);
+    const [newItemName, setNewItemName] = useState<string>(curTask ? curTask.title : "123");
+    const [newItemPoints, setNewItemPoints] = useState<string>(curTask ? curTask.points.toString() : "");
+    const [newItemFullPoints, setNewItemFullPoints] = useState<string>(curTask ? curTask.fullPoints.toString() : "");
+    const [newItemWeight, setNewItemWeight] = useState<string>(curTask ? curTask.weight.toString() : "");
+
+    useEffect(() => {
+        if (openDialog) {
+            setNewItemName(curTask ? curTask.title : "");
+            setNewItemPoints(curTask ? curTask.points.toString() : "");
+            setNewItemFullPoints(curTask ? curTask.fullPoints.toString() : "");
+            setNewItemWeight(curTask ? curTask.weight.toString() : "");
+        }
+    }, [curTask, openDialog]);
 
     const { langT } = useTranslator();
 
@@ -39,21 +55,43 @@ export const DialogNewTask: FunctionComponent<IDialogNewTask> = ({ openDialog, c
     };
 
     const handleSave = () => {
+        console.log("handleSave");
         closeDialog();
-        dispatch(
-            {
-                type: SubjectActionTypes.ADD_ITEM,
+        if (taskIndex !== undefined) {
+            dispatch({
+                type: SubjectActionTypes.MODIFY_ITEM,
                 value: {
                     index: subjectIndex,
-                    item: {
+                    itemIndex: taskIndex,
+                    newItem: {
                         title: newItemName === "" ? langT.DIALOG.TEXT_FIELD_DEFAULT_SUBJECT : newItemName,
                         points: newItemPoints === "" ? 0 : parseFloat(newItemPoints),
                         fullPoints: newItemFullPoints === "" ? 0 : parseFloat(newItemFullPoints),
                         weight: newItemWeight === "" ? 0 : parseFloat(newItemWeight),
                     },
-                },
-            }
-        );
+                }
+            });
+            console.log(taskIndex);
+            console.log(newItemName);
+            console.log(newItemPoints);
+            console.log(newItemFullPoints);
+            console.log(newItemWeight);
+        } else {
+            dispatch(
+                {
+                    type: SubjectActionTypes.ADD_ITEM,
+                    value: {
+                        index: subjectIndex,
+                        item: {
+                            title: newItemName === "" ? langT.DIALOG.TEXT_FIELD_DEFAULT_SUBJECT : newItemName,
+                            points: newItemPoints === "" ? 0 : parseFloat(newItemPoints),
+                            fullPoints: newItemFullPoints === "" ? 0 : parseFloat(newItemFullPoints),
+                            weight: newItemWeight === "" ? 0 : parseFloat(newItemWeight),
+                        },
+                    },
+                }
+            );
+        }
         setNewItemName("");
         setNewItemPoints("");
         setNewItemFullPoints("");
@@ -62,7 +100,7 @@ export const DialogNewTask: FunctionComponent<IDialogNewTask> = ({ openDialog, c
 
     return (
         <Dialog open={openDialog} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">{langT.DIALOG.TITLE_ADD_ITEM}</DialogTitle>
+            {taskIndex !== undefined ? null : <DialogTitle id="form-dialog-title">{langT.DIALOG.TITLE_ADD_ITEM}</DialogTitle>}
             <DialogContent>
                 <TextField
                     autoFocus
@@ -73,6 +111,7 @@ export const DialogNewTask: FunctionComponent<IDialogNewTask> = ({ openDialog, c
                     type="email"
                     fullWidth
                     onChange={onNewItemNameChange}
+                    value={newItemName}
                 />
                 <TextField
                     autoFocus
@@ -83,6 +122,7 @@ export const DialogNewTask: FunctionComponent<IDialogNewTask> = ({ openDialog, c
                     type="email"
                     fullWidth
                     onChange={onNewItemPointsChange}
+                    value={newItemPoints}
                 />
                 <TextField
                     autoFocus
@@ -93,6 +133,7 @@ export const DialogNewTask: FunctionComponent<IDialogNewTask> = ({ openDialog, c
                     type="email"
                     fullWidth
                     onChange={onNewItemFullPointsChange}
+                    value={newItemFullPoints}
                 />
                 <TextField
                     autoFocus
@@ -103,6 +144,7 @@ export const DialogNewTask: FunctionComponent<IDialogNewTask> = ({ openDialog, c
                     type="email"
                     fullWidth
                     onChange={onNewItemWeightChange}
+                    value={newItemWeight}
                 />
             </DialogContent>
             <DialogActions>

@@ -76,7 +76,7 @@ export const ColumnResult: FunctionComponent<IColumnResult> = ({ subjectIndex })
     );
 
     return (
-        <div style={{ paddingTop: 12, paddingLeft: 12, paddingRight: 12, width: "70vh" }}>
+        <div style={{ paddingTop: 12, paddingLeft: 12, paddingRight: 12, width: "40vw" }}>
             {subject ? resultPage : emptyPage}
         </div>
     );

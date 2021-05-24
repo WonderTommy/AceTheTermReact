@@ -50,7 +50,7 @@ export enum IPage {
     HISTORY = "HISTORY",
 }
 
-export type ISubjectActions = IAddSubject | IRemoveSubject | IAddItem | IRemoveItem;
+export type ISubjectActions = IAddSubject | IRemoveSubject | IAddItem | IRemoveItem | IModifyItem;
 
 export interface IAddSubject {
     type: SubjectActionTypes.ADD_SUBJECT;
@@ -78,11 +78,21 @@ export interface IRemoveItem {
     };
 }
 
+export interface IModifyItem {
+    type: SubjectActionTypes.MODIFY_ITEM;
+    value: {
+        index: number;
+        itemIndex: number;
+        newItem: ISubjectItem;
+    };
+}
+
 export enum SubjectActionTypes {
     ADD_SUBJECT = "ADD_SUBJECT",
     REMOVE_SUBJECT = "REMOVE_SUBJECT",
     ADD_ITEM = "ADD_ITEM",
     REMOVE_ITEM = "REMOVE_ITEM",
+    MODIFY_ITEM = "MODIFY_ITEM",
 }
 
 export interface ISubject {
