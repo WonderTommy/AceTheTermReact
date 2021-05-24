@@ -1,15 +1,24 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useState, useEffect } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
 import { useTranslator } from "../../constants";
-import { dispatch, SubjectActionTypes } from "../../redux-components";
+import { dispatch, SubjectActionTypes, useSubjectTitleSelector } from "../../redux-components";
 
 interface IDialogNewSubject {
     openDialog: boolean;
     closeDialog: () => void;
+
+    subjectIndex?: number;
 }
 
-export const DialogNewSubject: FunctionComponent<IDialogNewSubject> = ({ openDialog, closeDialog }) => {
-    const [dialogInputNewSubject, setDialogInputNewSubject] = useState<string>("");
+export const DialogNewSubject: FunctionComponent<IDialogNewSubject> = ({ openDialog, closeDialog, subjectIndex }) => {
+    const curTitle = useSubjectTitleSelector(subjectIndex ?? -1) ?? "";
+    const [dialogInputNewSubject, setDialogInputNewSubject] = useState<string>(curTitle);
+
+    useEffect(() => {
+        if (openDialog) {
+            setDialogInputNewSubject(curTitle);
+        }
+    }, [openDialog, curTitle]);
 
     const { langT } = useTranslator();
 
@@ -23,19 +32,28 @@ export const DialogNewSubject: FunctionComponent<IDialogNewSubject> = ({ openDia
     };
 
     const handleSave = () => {
-        dispatch(
-            {
-                type: SubjectActionTypes.ADD_SUBJECT,
-                value: { title: dialogInputNewSubject === "" ? langT.DIALOG.TEXT_FIELD_DEFAULT_SUBJECT : dialogInputNewSubject, items: [] },
-            }
-        );
+        if (subjectIndex !== undefined) {
+            dispatch(
+                {
+                    type: SubjectActionTypes.MODIFY_SUBJECT,
+                    value: { subjectIndex, newTitle: dialogInputNewSubject === "" ? langT.DIALOG.TEXT_FIELD_DEFAULT_SUBJECT : dialogInputNewSubject, }
+                }
+            );
+        } else {
+            dispatch(
+                {
+                    type: SubjectActionTypes.ADD_SUBJECT,
+                    value: { title: dialogInputNewSubject === "" ? langT.DIALOG.TEXT_FIELD_DEFAULT_SUBJECT : dialogInputNewSubject, items: [] },
+                }
+            );
+        }
         closeDialog();
         setDialogInputNewSubject("");
     };
 
     return (
         <Dialog open={openDialog} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">{langT.DIALOG.TITLE_ADD_SUBJECT}</DialogTitle>
+            {subjectIndex !== undefined ? null : <DialogTitle id="form-dialog-title">{langT.DIALOG.TITLE_ADD_SUBJECT}</DialogTitle>}
             <DialogContent>
                 <TextField
                     autoFocus
@@ -46,6 +64,7 @@ export const DialogNewSubject: FunctionComponent<IDialogNewSubject> = ({ openDia
                     type="email"
                     fullWidth
                     onChange={onDialogNewSubjectChange}
+                    value={dialogInputNewSubject}
                 />
             </DialogContent>
             <DialogActions>

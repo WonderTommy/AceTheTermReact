@@ -9,10 +9,11 @@ export interface IListRow {
     width: number;
     doSelectOnEditMode: boolean;
     onSelect: () => void;
+    onLongClick: () => void;
     onToggleChecked: (target: boolean) => void;
 }
 
-export const ListRow: FunctionComponent<IListRow> = ({ rowContent, editMode, changeColorOnMouseHover, width, doSelectOnEditMode, onSelect, onToggleChecked }) => {
+export const ListRow: FunctionComponent<IListRow> = ({ rowContent, editMode, changeColorOnMouseHover, width, doSelectOnEditMode, onSelect, onLongClick, onToggleChecked }) => {
     const [checked, setChecked] = useState<boolean>(false);
     const [color, setColor] = useState<string>("white");
 
@@ -32,6 +33,12 @@ export const ListRow: FunctionComponent<IListRow> = ({ rowContent, editMode, cha
         setChecked(target);
     };
 
+    const onLongClickWrapper = () => {
+        if (!editMode) {
+            onLongClick();
+        }
+    }
+
     const mouseEnterAction = () => {
         setColor("#D3D3D3");
     };
@@ -41,7 +48,7 @@ export const ListRow: FunctionComponent<IListRow> = ({ rowContent, editMode, cha
     };
 
     return (
-        <div onClick={editMode ? onSelectEditModeWrapper : onSelect} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+        <div onClick={editMode ? onSelectEditModeWrapper : onSelect} onDoubleClick={onLongClickWrapper} style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
             <div style={{ display: editMode ? "flex" : "none", flexDirection: "column", justifyContent: "center" }}>
                 <Checkbox color={"primary"} checked={checked}/>
             </div>

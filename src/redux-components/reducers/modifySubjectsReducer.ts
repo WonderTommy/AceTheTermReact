@@ -96,6 +96,10 @@ export const modifySubjectsReducer: Reducer<ISubject[], ISubjectActions> = (oldS
         });
         newState = [...oldState];
         return newState;
+      case SubjectActionTypes.MODIFY_SUBJECT:
+        actionValue = value as { subjectIndex: number, newTitle: string };
+        newState[actionValue.subjectIndex].title = actionValue.newTitle;
+        return newState;
       case SubjectActionTypes.ADD_ITEM:
         const { index, item } = value as { index: number, item: ISubjectItem };
         newState[index].items.push(item);

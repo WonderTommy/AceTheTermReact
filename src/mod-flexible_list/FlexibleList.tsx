@@ -8,6 +8,7 @@ interface IFlexibleList {
     width: number;
     doSelectOnEditMode?: boolean;
     onSelect?: (index: number) => () => void;
+    onLongClick?: (index: number) => () => void;
 
     title?: string;
     onAddItem?: () => void;
@@ -22,6 +23,7 @@ export const FlexibleList: FunctionComponent<IFlexibleList> = (props) => {
         width,
         doSelectOnEditMode,
         onSelect,
+        onLongClick,
         title,
         onAddItem,
         onDeleteItem,
@@ -65,6 +67,7 @@ export const FlexibleList: FunctionComponent<IFlexibleList> = (props) => {
             width,
             doSelectOnEditMode: doSelectOnEditMode ?? true,
             onSelect: onSelect ? onSelect(index) : (() => {}),
+            onLongClick: onLongClick ? onLongClick(index) : (() => {}),
             onToggleChecked: onToggleChecked(index),
         };
     });

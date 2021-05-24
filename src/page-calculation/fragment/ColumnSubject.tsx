@@ -12,6 +12,9 @@ export interface IColumnSubject {
 export const ColumnSubject: FunctionComponent<IColumnSubject> = ({ setSelectedIndex }) => {
     const [checkedIndex, setCheckedIndex] = useState<number[]>([]);
 
+    const [editIndex, setEditIndex] = useState<number>(-1);
+    const [openEditSubject, setOpenEditSubject] = useState<boolean>(false);
+
     // const [editMode, setEditMode] = useState<boolean>(false);
     const [openNewSubjectDialog, setOpenNewSubjectDialog] = useState<boolean>(false);
     const [openSubjectAlertDialog, setOpenSubjectAlertDialog] = useState<boolean>(false);
@@ -41,11 +44,18 @@ export const ColumnSubject: FunctionComponent<IColumnSubject> = ({ setSelectedIn
         setOpenNewSubjectDialog(true);
     };
 
+    const handleModifySubject = (index: number) => () => {
+        // console.log("Long click index" + index);
+        setEditIndex(index);
+        setOpenEditSubject(true);
+    };
+
     const itemSubjects = subjectTitles.map(({ title, index }) => <ItemSubject title={title} key={index}/>);
     return (
         <div style={{ display: "flex", flexDirection: "column", paddingRight: 12 }}>
-            <FlexibleList hasEditMode={true} width={240} elements={itemSubjects} onSelect={setSelectedIndex} onAddItem={handleClickOpen} onDeleteItem={handleDelete}/>
+            <FlexibleList hasEditMode={true} width={240} elements={itemSubjects} onSelect={setSelectedIndex} onLongClick={handleModifySubject} onAddItem={handleClickOpen} onDeleteItem={handleDelete}/>
             <DialogNewSubject openDialog={openNewSubjectDialog} closeDialog={() => { setOpenNewSubjectDialog(false) }}/>
+            <DialogNewSubject openDialog={openEditSubject} closeDialog={() => { setOpenEditSubject(false) }} subjectIndex={editIndex}/>
             <AlertDialog message={langT.ALERT_MESSAGE_SELECT_AT_LEAST_ONE_ITEM_TO_DELETE} okButtonLabel={langT.ALERT_BUTTON_OK} open={openSubjectAlertDialog} closeDialog={ () => { setOpenSubjectAlertDialog(false) } } onSave={() => { setOpenSubjectAlertDialog(false) }}/>
             <AlertDialog message={langT.ALERT_MESSAGE_CONFIRM_DELETE} okButtonLabel={langT.ALERT_BUTTON_OK} cancelButtonLabel={langT.DIALOG.BUTTON_CANCEL} open={openConfirmDeleteDialog} closeDialog={ () => { setOpenConfirmDeleteDialog(false) }} onSave={dispatchDelete}/>
         </div>
