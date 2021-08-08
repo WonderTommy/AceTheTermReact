@@ -1,6 +1,8 @@
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+To use this app locally, clone this repo to your machine and follow the instruction.
+Or visit https://wondertommy.github.io/AceTheTermReact/ to use in browser.
 
 ## Available Scripts
 
